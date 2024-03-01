@@ -1,8 +1,9 @@
 import { REST, Routes } from "discord.js";
+import { config } from "./config.mjs";
 
 const clientId = "1204613780554911814";
-const token =
-  "MTIwNDYxMzc4MDU1NDkxMTgxNA.GwaKg2.D3HsspX9WRD7Paz3sj56fIFVm6DMMuEKUDmvv0";
+const token = config.token;
+
 const commands = [
   {
     name: "random",
@@ -12,6 +13,18 @@ const commands = [
   {
     name: "position",
     description: "Random Lol positon!",
+  },
+  {
+    name: "winrate",
+    description: "KH Bonex winrate",
+  },
+  {
+    name: "statsyordle",
+    description: "HappyYordle stats win/lose",
+  },
+  {
+    name: "statsbonex",
+    description: "Bonex stats win/lose",
   },
 ];
 

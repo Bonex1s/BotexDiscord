@@ -1,21 +1,11 @@
 import { Client, GatewayIntentBits } from "discord.js";
+import cheerio from "cheerio";
+import { config } from "./config.mjs";
+import { position } from "./variables.mjs";
+import { elements, getRandomInt, pageLoad } from "./appFunctions.mjs";
+
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-const token =
-  "MTIwNDYxMzc4MDU1NDkxMTgxNA.GwaKg2.D3HsspX9WRD7Paz3sj56fIFVm6DMMuEKUDmvv0";
-
-const position = {
-  key1: "на топе",
-  key2: "на миде",
-  key3: "в лесу",
-  key4: "на адк",
-  key5: "на саппорте",
-};
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const token = config.token;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -34,6 +24,7 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "teemo") {
     await interaction.reply("Шанс того что teemo кусока говна, равен 100%!");
   }
+
   if (interaction.commandName === "position") {
     function randomPosition(position) {
       const keys = Object.keys(position);
@@ -41,6 +32,30 @@ client.on("interactionCreate", async (interaction) => {
       return position[keys[randomIndex]];
     }
     await interaction.reply("Играем" + " " + randomPosition(position));
+  }
+  if (interaction.commandName === "winrate") {
+    const { winr } = await elements(
+      "https://www.leagueofgraphs.com/summoner/euw/KH%20Bonex-12158"
+    );
+    await interaction.reply(`"Процент побед KH Bonex равен:  ${winr}"`);
+  }
+  if (interaction.commandName === "statsyordle") {
+    const { win, lose, winr, games } = await elements(
+      "https://www.leagueofgraphs.com/summoner/euw/KH+HappyYordle-EUW"
+    );
+
+    await interaction.reply(
+      `KH HappyYordle: ${win} побед и ${lose} поражений\nВинрейт: ${winr}\nВсего игр solo/duo: ${games}`
+    );
+  }
+  if (interaction.commandName === "statsbonex") {
+    const { win, lose, winr, games } = await elements(
+      "https://www.leagueofgraphs.com/summoner/euw/KH%20Bonex-12158"
+    );
+
+    await interaction.reply(
+      `KH Bonex: ${win} побед и ${lose} поражений\nВинрейт: ${winr}\nВсего игр solo/duo: ${games}`
+    );
   }
 });
 
