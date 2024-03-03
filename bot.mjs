@@ -1,5 +1,4 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import cheerio from "cheerio";
 import { config } from "./config.mjs";
 import { position } from "./variables.mjs";
 import { elements, getRandomInt, pageLoad } from "./appFunctions.mjs";

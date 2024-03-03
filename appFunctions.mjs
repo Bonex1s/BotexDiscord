@@ -1,5 +1,4 @@
-import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 
 async function pageLoad(url) {
   const res = await fetch(url);
